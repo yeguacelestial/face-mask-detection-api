@@ -9,6 +9,9 @@ from api.serializers import MaskDetectorSerializer
 
 from django.conf import settings
 
+from load_model import predict_mask_on_img
+
+
 class MaskDetectorViewSet(viewsets.ModelViewSet):
     queryset = MaskDetector.objects.all()
     serializer_class = MaskDetectorSerializer
@@ -20,9 +23,17 @@ class MaskDetectorViewSet(viewsets.ModelViewSet):
             serializer.save()
 
             image_dir = os.path.join(settings.MEDIA_ROOT, 'Images', str(request.data['image']))
-            print(f"IMAGE DIR => {image_dir}")
-            print(f"EXISTS? => {os.path.exists(image_dir)}")
+            # print(f"IMAGE DIR => {image_dir}")
+            # print(f"EXISTS? => {os.path.exists(image_dir)}")
 
-            return Response(status=status.HTTP_201_CREATED)
+            # Predict mask on img
+            result = predict_mask_on_img(image_dir)
+
+            response_data = {
+                'person_has_mask': result[0],
+                'scalar_result': result[1]
+            }
+
+            return Response(status=status.HTTP_201_CREATED, data={'prediction_result': response_data})
 
         return Response(status=status.HTTP_400_BAD_REQUEST)
