@@ -1,4 +1,4 @@
-import tensorflow as tf
+# import tensorflow as tf
 import tflite_runtime.interpreter as tflite
 
 import numpy as np
@@ -10,7 +10,7 @@ from urllib import request
 MODEL_URL = 'https://github.com/yeguacelestial/face-mask-detection-api/raw/main/mask_classifier.tflite'
 
 print("[*] Downloading model...")
-urllib.request.urlretrieve(MODEL_URL, 'mask_classifier.tflite')
+request.urlretrieve(MODEL_URL, 'mask_classifier.tflite')
 
 print("[+] Done.")
 
