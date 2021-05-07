@@ -20,11 +20,7 @@ class MaskDetectorViewSet(viewsets.ModelViewSet):
         serializer = MaskDetectorSerializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
-
             image_dir = os.path.join(settings.MEDIA_ROOT, 'Images', str(request.data['image']))
-            # print(f"IMAGE DIR => {image_dir}")
-            # print(f"EXISTS? => {os.path.exists(image_dir)}")
 
             # Predict mask on img
             result = predict_mask_on_img(image_dir)
@@ -33,6 +29,9 @@ class MaskDetectorViewSet(viewsets.ModelViewSet):
                 'person_has_mask': result[0],
                 'scalar_result': result[1]
             }
+
+            serializer.validated_data['person_has_mask'] = result[0]
+            serializer.save()
 
             return Response(status=status.HTTP_201_CREATED, data={'prediction_result': response_data})
 
