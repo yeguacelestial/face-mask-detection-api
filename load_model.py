@@ -2,6 +2,7 @@
 import tflite_runtime.interpreter as tflite
 
 import numpy as np
+from pathlib import Path
 
 from PIL import Image
 
@@ -9,10 +10,16 @@ from urllib import request
 
 MODEL_URL = 'https://github.com/yeguacelestial/face-mask-detection-api/raw/main/mask_classifier.tflite'
 
-print("[*] Downloading model...")
-request.urlretrieve(MODEL_URL, 'mask_classifier.tflite')
+mask_classifier_file = Path('mask_classifier.tflite')
 
-print("[+] Done.")
+if mask_classifier_file.exists():
+    pass
+
+else:
+    print("[*] Downloading model...")
+    request.urlretrieve(MODEL_URL, 'mask_classifier.tflite')
+
+    print("[+] Done.")
 
 # Load TFLite model and allocate tensors
 interpreter = tflite.Interpreter(model_path='mask_classifier.tflite')
