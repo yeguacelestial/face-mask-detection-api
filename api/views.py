@@ -20,6 +20,8 @@ class MaskDetectorViewSet(viewsets.ModelViewSet):
         serializer = MaskDetectorSerializer(data=request.data)
 
         if serializer.is_valid():
+            serializer.save()
+
             image_dir = os.path.join(settings.MEDIA_ROOT, 'Images', str(request.data['image']))
 
             # Predict mask on img
