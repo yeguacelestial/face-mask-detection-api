@@ -5,6 +5,15 @@ import numpy as np
 
 from PIL import Image
 
+from urllib import request
+
+MODEL_URL = 'https://github.com/yeguacelestial/face-mask-detection-api/raw/main/mask_classifier.tflite'
+
+print("[*] Downloading model...")
+urllib.request.urlretrieve(MODEL_URL, 'mask_classifier.tflite')
+
+print("[+] Done.")
+
 # Load TFLite model and allocate tensors
 interpreter = tflite.Interpreter(model_path='mask_classifier.tflite')
 interpreter.allocate_tensors()
