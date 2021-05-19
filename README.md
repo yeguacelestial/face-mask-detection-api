@@ -8,7 +8,7 @@ how can a trained model be integrated with a REST API environment.
 
 The following URL indicates the main base URL of all the requests.
 ```url
-https://face-mask-detection-api.herokuapp.com/api/v1/
+https://face-mask-detection-api.herokuapp.com/api/v1/mask-detection/
 ```
 
 ## Mask detection
